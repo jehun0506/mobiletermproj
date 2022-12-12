@@ -3,10 +3,14 @@ package com.course.termproj;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cursoradapter.widget.CursorAdapter;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,29 +20,31 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
 public class MyAdapter extends CursorAdapter {
-    private final Context mContext;
 
     public MyAdapter(Context context, Cursor cursor) {
-        super(context,cursor);
-        mContext = context;
+        super(context,cursor, false);
     }
 
     @Override
-
     public void bindView(View view, Context context, Cursor cursor){
-        final ImageView imageView = (ImageView)view.findViewById(R.id.thumbNail);
-        final TextView textView = (TextView)view.findViewById(R.id.date);
-        Toast.makeText(context, "제발", Toast.LENGTH_SHORT).show();
-        //imageView.setImageURI(Uri.parse(cursor.getString(1)));
-        textView.setText(cursor.getString(3));
+        ImageView imageView = (ImageView)view.findViewById(R.id.thumbNail);
+        TextView textView = (TextView)view.findViewById(R.id.date);
+        imageView.setImageURI(Uri.parse(cursor.getString(1)));
+        File file = new File(cursor.getString(1));
+        Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+        imageView.setImageBitmap(bitmap);
+        //textView.setText(cursor.getString(1));
     }
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent){
-        Toast.makeText(context, "되나", Toast.LENGTH_SHORT).show();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View v = inflater.inflate(R.layout.activity_show, parent, false);
+        View v = inflater.inflate(R.layout.listview_custom, parent, false);
         return v;
     }
 

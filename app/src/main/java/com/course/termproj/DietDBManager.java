@@ -8,8 +8,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 
 public class DietDBManager extends SQLiteOpenHelper {
-    static final String DIET_DB = "TEMP1234.db";
-    static final String DIET_TABLE = "TEMP1234";
+    static final String DIET_DB = "TEMP12345.db";
+    static final String DIET_TABLE = "TEMP12345";
     Context context = null;
     private static DietDBManager dbManager = null;
     static final String CREATE_DB = " CREATE TABLE " + DIET_TABLE + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, IMAGE TEXT NOT NULL,"

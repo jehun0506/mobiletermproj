@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
@@ -39,6 +40,7 @@ public class InputActivity extends AppCompatActivity {
         Intent receiveIntent = getIntent();
         String receiveAddress = receiveIntent.getStringExtra("address");
         addressText = (EditText) findViewById(R.id.addressText);
+        //imageView = (ImageView)findViewById(R.id.iv);
         addressText.setText(receiveAddress);
     }
 
@@ -52,12 +54,14 @@ public class InputActivity extends AppCompatActivity {
         super.onActivityResult(requestCode,resultCode,data);
         if (requestCode == 1) {
             uri = data.getData();
+            Toast.makeText(getBaseContext(),
+                    uri_path(uri), Toast.LENGTH_LONG).show();
         }
     }
     public void addDiet(View view) {
         ContentValues addValues = new ContentValues();
 
-        addValues.put(MyContentProvider.IMAGE, uri.toString());
+        addValues.put(MyContentProvider.IMAGE, uri_path(uri));
         addValues.put(MyContentProvider.FOOD_NAME,
                 ((EditText)findViewById(R.id.editText1)).getText().toString());
 
@@ -73,7 +77,7 @@ public class InputActivity extends AppCompatActivity {
                 ((EditText)findViewById(R.id.addressText)).getText().toString());
         getContentResolver().insert(MyContentProvider.CONTENT_URI, addValues);
         Toast.makeText(getBaseContext(),
-                uri.toString(), Toast.LENGTH_LONG).show();
+                uri_path(uri), Toast.LENGTH_LONG).show();
     }
 
     public void getDiets(View view) {
@@ -100,5 +104,16 @@ public class InputActivity extends AppCompatActivity {
             editMultipleText.append("\n\n Total : " + c.getCount());
             c.close();
         }
+    }
+    private String uri_path(Uri uri){
+        String res = null;
+        String[] image_data = {MediaStore.Images.Media.DATA};
+        Cursor cursor = getContentResolver().query(uri,image_data,null, null, null);
+        if(cursor.moveToFirst()){
+            int col = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+            res = cursor.getString(col);
+        }
+        cursor.close();
+        return res;
     }
 }

@@ -1,5 +1,7 @@
 package com.course.termproj;
 
+import static com.course.termproj.DietDBManager.DIET_TABLE;
+
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -7,7 +9,7 @@ import android.net.Uri;
 
 public class MyContentProvider extends ContentProvider {
     static final String PROVIDER_NAME = "com.course.termproj";
-    static final String URL = "content://" + PROVIDER_NAME + "/TEMP1234";
+    static final String URL = "content://" + PROVIDER_NAME + "/" + DIET_TABLE;
     static final Uri CONTENT_URI = Uri.parse(URL);
     static final String _ID = "_id";
     static final String FOOD_NAME = "FOOD_NAME";
