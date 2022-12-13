@@ -18,6 +18,7 @@ public class MyContentProvider extends ContentProvider {
     static final String FOOD_REVIEW = "FOOD_REVIEW";
     static final String IMAGE = "IMAGE";
     static final String LOCATION = "LOCATION";
+    static final String CALORIES = "CALORIES";
 
     public DietDBManager dbManager;
 

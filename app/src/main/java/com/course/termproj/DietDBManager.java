@@ -8,12 +8,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 
 public class DietDBManager extends SQLiteOpenHelper {
-    static final String DIET_DB = "TEMP12345.db";
-    static final String DIET_TABLE = "TEMP12345";
+    static final String DIET_DB = "TEMP135.db";
+    static final String DIET_TABLE = "TEMP135";
     Context context = null;
     private static DietDBManager dbManager = null;
-    static final String CREATE_DB = " CREATE TABLE " + DIET_TABLE + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, IMAGE TEXT NOT NULL,"
-            + " FOOD_NAME TEXT NOT NULL, FOOD_QUANTITY TEXT NOT NULL, FOOD_DATE TEXT NOT NULL, FOOD_REVIEW TEXT NOT NULL, LOCATION TEXT NOT NULL);";
+    static final String CREATE_DB = " CREATE TABLE " + DIET_TABLE + " (_id INTEGER PRIMARY KEY AUTOINCREMENT, IMAGE varchar(1000) NOT NULL,"
+            + " FOOD_NAME TEXT NOT NULL, FOOD_QUANTITY TEXT NOT NULL, FOOD_DATE TEXT NOT NULL, FOOD_REVIEW TEXT NOT NULL, LOCATION TEXT NOT NULL, CALORIES varchar(20));";
 
     public DietDBManager(Context context, String dbName,
                          SQLiteDatabase.CursorFactory factory, int version) {
@@ -47,6 +47,7 @@ public class DietDBManager extends SQLiteOpenHelper {
         return getReadableDatabase().query(DIET_TABLE, columns,
                 selection, selectionArgs, groupBy, having, orderBy);
     }
+
     public int delete(String whereClause, String[] whereArgs) {
         return getWritableDatabase().delete(DIET_TABLE, whereClause,
                 whereArgs);
